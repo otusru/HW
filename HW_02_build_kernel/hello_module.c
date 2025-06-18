@@ -9,7 +9,7 @@
 #define MAX_LEN 128
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("otusru");
+MODULE_AUTHOR("otus");
 MODULE_DESCRIPTION("Hello, World!");
 
 #define pr_fmt(fmt) MODULE_NAME ": " fmt
