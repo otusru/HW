@@ -161,7 +161,7 @@ cp -r ../linux-*6.1.130*_amd64.deb /media/linux/78D48F66D48F260A
 ```
 
 ```bash
-tar -czvf linux-6.1.130.tar.gz linux-headers-6.1.130_6.1.130-3_amd64.deb linux-image-6.1.130_6.1.130-3_amd64.deb linux-image-6.1.130-dbg_6.1.130-3_amd64.deb linux-libc-dev_6.1.130-3_amd64.deb
+tar -czvf linux-6.1.130.tar.gz linux-*.deb
 ```
 
 ### 15. Установить новое ядро
