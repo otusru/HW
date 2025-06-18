@@ -17,12 +17,7 @@
  README
 [1mdpkg-source: [0m[1;33mпредупреждение[0m: отсутствует информация о поле вывода Standards-Version
 [1;35m debian/rules binary
-[0mmake[5]: *** Нет правила для сборки цели «y», требуемой для «certs/x509_certificate_list».  Останов.
-make[5]: *** Ожидание завершения заданий…
-make[4]: *** [scripts/Makefile.build:503: certs] Ошибка 2
-make[4]: *** Ожидание завершения заданий…
-make[3]: *** [Makefile:2009: .] Ошибка 2
-make[2]: *** [debian/rules:7: build-arch] Ошибка 2
-[1mdpkg-buildpackage: [0m[1;31mошибка[0m: debian/rules binary subprocess returned exit status 2
-make[1]: *** [scripts/Makefile.package:80: deb-pkg] Ошибка 2
-make: *** [Makefile:1651: deb-pkg] Ошибка 2
+[0m[1;35m dpkg-genbuildinfo -O../linux-upstream_6.1.130-3_amd64.buildinfo
+[0m[1;35m dpkg-genchanges -O../linux-upstream_6.1.130-3_amd64.changes
+[0m[1;35m dpkg-source -i.git --after-build .
+[0m
