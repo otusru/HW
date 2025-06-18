@@ -1,16 +1,18 @@
-./scripts/config --disable SECURITY_SELINUX \
-                --disable SECURITY_SMACK \
-                --disable SECURITY_TOMOYO \
-                --disable SECURITY_APPARMOR \
-                --disable SECURITY_YAMA \
-                --disable RANDOMIZE_BASE \
-                --disable CPU_MITIGATIONS \
-                --disable MITIGATION_SPECTRE_BHI \
-                --disable MITIGATION_RFDS \
-                --disable PAGE_TABLE_ISOLATION \
-                --disable ZSWAP \
-                --disable BPF \
-                --disable BPF_SYSCALL \
-                --disable BPF_JIT \
-                --disable BPF_EVENTS \
-                --disable BPFILTER
+./scripts/config \
+--disable SECURITY_SELINUX \
+--disable SECURITY_SMACK \
+--disable SECURITY_TOMOYO \
+--disable SECURITY_APPARMOR \
+--disable SECURITY_YAMA \
+--disable RANDOMIZE_BASE \
+--disable CPU_MITIGATIONS \
+--disable MITIGATION_SPECTRE_BHI \
+--disable MITIGATION_RFDS \
+--disable PAGE_TABLE_ISOLATION \
+--disable ZSWAP \
+--disable BPF \
+--disable BPF_SYSCALL \
+--disable BPF_JIT \
+--disable BPF_EVENTS \
+--disable BPFILTER \
+--disable MODULE_SIG
