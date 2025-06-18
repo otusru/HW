@@ -1,38 +1,44 @@
-# Шаги
+## **СБОРКА ЯДРА LINUX 6.1.130**
+
+### 1. Стать `root`
 
 ```bash
-sudo vim /etc/apt/sources.list
+su
 ```
 
-```bash
-sudo echo "deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list
-```
+### 2. Обновить источники пакетов
 
 ```bash
-sudo apt update
+echo "deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list
 ```
 
+### 3. Установить все необходимые зависимости
+
 ```bash
-sudo apt install -y curl                # Утилита командной строки для отправки HTTP, FTP и других запросов; используется для скачивания файлов
-sudo apt install -y build-essential     # Набор базовых инструментов для компиляции C/C++ (gcc, g++, make и др.)
-sudo apt install -y libncurses-dev      # Библиотека для создания текстовых интерфейсов; используется, например, в menuconfig ядра
-sudo apt install -y bison               # Генератор синтаксических анализаторов (альтернатива yacc); нужен при сборке ядра и других проектов
-sudo apt install -y flex                # Генератор лексических анализаторов; часто используется с bison
-sudo apt install -y libssl-dev          # Заголовочные файлы OpenSSL — для поддержки криптографии (например, TLS)
-sudo apt install -y bc                  # Консольный калькулятор с поддержкой скриптов; используется в сборочных скриптах ядра
-sudo apt install -y dwarves             # Набор утилит для анализа DWARF-отладочной информации (в частности, используется pahole)
-sudo apt install -y pahole              # Утилита для анализа и оптимизации структур в C; полезна при работе с ядром
-sudo apt install -y libelf-dev          # Работа с форматом ELF (исполняемые файлы, библиотеки, объектные файлы)
-sudo apt install -y zlib1g-dev          # Библиотека сжатия zlib, часто требуется при сборке ядра и других приложений
-sudo apt install -y git                 # Система контроля версий Git, нужна для получения исходников
-sudo apt install -y make                # Утилита автоматической сборки проектов (Makefile)
-sudo apt install -y gcc                 # Компилятор языка C от GNU
-sudo apt install -y dpkg-dev            # Инструменты для сборки .deb-пакетов (в т.ч. dpkg-source)
-sudo apt install -y fakeroot            # Позволяет "эмулировать" root-доступ при сборке пакетов
-sudo apt install -y rsync               # Утилита синхронизации и копирования файлов/каталогов
-sudo apt install -y kmod                # Управление модулями ядра Linux (insmod, rmmod, modprobe и др.)
-sudo apt install -y cpio                # Архиватор, используется в процессе сборки initramfs и др.
-sudo apt install -y python3             # Интерпретатор Python 3 — часто требуется в сборочных скриптах и утилитах
+apt update
+apt install -y \
+    build-essential libncurses-dev bison flex libssl-dev bc \
+    dwarves pahole libelf-dev zlib1g-dev git make gcc \
+    dpkg-dev fakeroot rsync kmod cpio python3 curl
+```
+
+### 4. Очистить ненужные модули и проверка загруженных модулей (не обязательно)
+
+```bash
+sudo modprobe -r bluetooth
+sudo modprobe -r snd_hda_codec_hdmi
+```
+
+Проверь загруженные модули:
+
+```bash
+lsmod
+```
+
+### 5. Загрузить исходный код ядра
+
+```bash
+cd /usr/src
 ```
 
 ```bash
@@ -44,40 +50,139 @@ tar -xvf linux-6.1.130.tar.gz
 ```
 
 ```bash
-cd ./linux-6.1.130
+cd linux-6.1.130
 ```
 
-```bash
-./scripts/config --disable SECURITY_SELINUX \
-                --disable SECURITY_SMACK \
-                --disable SECURITY_TOMOYO \
-                --disable SECURITY_APPARMOR \
-                --disable SECURITY_YAMA \
-                --disable RANDOMIZE_BASE \
-                --disable CPU_MITIGATIONS \
-                --disable MITIGATION_SPECTRE_BHI \
-                --disable MITIGATION_RFDS \
-                --disable PAGE_TABLE_ISOLATION \
-                --disable ZSWAP \
-                --disable BPF \
-                --disable BPF_SYSCALL \
-                --disable BPF_JIT \
-                --disable BPF_EVENTS \
-                --disable BPFILTER
-```
+### 6. Скопировать текущую конфигурацию ядра (не обязательно)
 
 ```bash
 cp -v /boot/config-$(uname -r) .config
 ```
 
+### 7. Изменить конфигурацию (отключить ненужные опции)
+
 ```bash
-make -j$(nproc) deb-pkq 2>error.log
+./scripts/config \
+--disable SECURITY_SELINUX \
+--disable SECURITY_SMACK \
+--disable SECURITY_TOMOYO \
+--disable SECURITY_APPARMOR \
+--disable SECURITY_YAMA \
+--disable RANDOMIZE_BASE \
+--disable CPU_MITIGATIONS \
+--disable MITIGATION_SPECTRE_BHI \
+--disable MITIGATION_RFDS \
+--disable PAGE_TABLE_ISOLATION \
+--disable ZSWAP \
+--disable BPF \
+--disable BPF_SYSCALL \
+--disable BPF_JIT \
+--disable BPF_EVENTS \
+--disable BPFILTER \
+--disable MODULE_SIG
+```
+
+### 8. Обновить конфигурацию
+
+
+Минимальное ядро для железа
+
+```bash
+make localmodconfig       # Создает конфигурацию только для загруженных модулей текущей системы (минималистичная)
+```
+
+Базовая конфигурация (не обязательно)
+
+```bash
+make defconfig            # Создает базовую конфигурацию по умолчанию от разработчиков ядра.
+```
+
+Если уже есть .config (не обязательно)
+
+```bash
+make olddefconfig         # Обновляет существующую .config, задавая дефолтные значения для новых параметров.
+```
+
+### 9. Копировать на флэшку .config
+
+```bash
+df -h
 ```
 
 ```bash
-cat ./error.log
+cp -r .config /media/linux/78D48F66D48F260A
 ```
+
+### 10. Собрать .deb пакеты ядра
+
+```bash
+make -j$(nproc) deb-pkg 2> ../error.log
+```
+
+### 11. Проверить наличие ошибок
+
+```bash
+cat ../error.log
+```
+
+### 12. Копировать на флэшку error.log
+
+```bash
+df -h
+```
+
+```bash
+cp -r ../error.log /media/linux/78D48F66D48F260A
+```
+
+### 13. Проверить наличия ядра
 
 ```bash
 ls -la ../ | grep deb
+```
+
+Ожидаемый вывод:
+
+```
+-rw-r--r--  1 root root   8544440 июн 18 13:04 linux-headers-6.1.130_6.1.130-3_amd64.deb
+-rw-r--r--  1 root root  13288196 июн 18 13:04 linux-image-6.1.130_6.1.130-3_amd64.deb
+-rw-r--r--  1 root root 148206204 июн 18 13:05 linux-image-6.1.130-dbg_6.1.130-3_amd64.deb
+-rw-r--r--  1 root root   1275312 июн 18 13:04 linux-libc-dev_6.1.130-3_amd64.deb
+```
+
+### 14. Копировать на флэшку error.log
+
+```bash
+df -h
+```
+
+```bash
+cp -r ../linux-*6.1.130*_amd64.deb /media/linux/78D48F66D48F260A
+```
+
+### 15. Установить новое ядро
+
+```bash
+cd ..
+dpkg -i linux-image-6.1.130*.deb linux-headers-6.1.130*.deb
+```
+
+### 16. Перезагрузить систему
+
+```bash
+reboot
+```
+
+### 17. Проверить, что новое ядро загружено
+
+После перезагрузки:
+
+```bash
+uname -r
+```
+
+Ожидаемый вывод:
+
+```
+6.1.130
 ```
