@@ -79,7 +79,14 @@ cp -v /boot/config-$(uname -r) .config
 --disable BPF_JIT \
 --disable BPF_EVENTS \
 --disable BPFILTER \
---disable MODULE_SIG
+--disable MODULE_SIG \
+--disable KUNIT \
+--disable KASAN \
+--disable KASAN_GENERIC \
+--disable KASAN_INLINE \
+--disable KGDB \
+--disable KGDB_SERIAL_CONSOLE \
+--disable CONSOLE_POLL
 ```
 
 ### 8. Обновить конфигурацию
