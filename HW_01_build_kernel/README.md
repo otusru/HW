@@ -42,27 +42,32 @@ lsmod
 
 ### 5. Загрузить исходный код ядра
 
+Перейти в каталог для исходников:
 ```bash
 cd /usr/src
 ```
 
-```bash
-rm ../linux-upstream_6.1.130.orig.tar.gz
-
-```
-
-```bash
-tar czf linux-upstream_6.1.130.orig.tar.gz --transform='s,^linux-6.1.130,linux-upstream-6.1.130,' linux-6.1.130
-```
-
+Скачать архив, если ещё не скачан:
 ```bash
 curl -O https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.130.tar.gz
 ```
 
+Распаковать архив:
 ```bash
 tar -xvf linux-6.1.130.tar.gz
 ```
 
+Удалить его если у тебя уже был .orig.tar.gz с другим именем (не обязательно)
+```bash
+rm -f linux-*_6.1.130.orig.tar.gz
+```
+
+Создать dpkg-совместимый архив из исходников:
+```bash
+tar --exclude='*.deb' --exclude='*.log' -czf linux-6.1.130_6.1.130.orig.tar.gz linux-6.1.130
+```
+
+Перейти в каталог исходников:
 ```bash
 cd linux-6.1.130
 ```
