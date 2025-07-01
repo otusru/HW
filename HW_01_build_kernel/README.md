@@ -216,7 +216,7 @@ df -h
 ```
 
 ```bash
-cp -r ../linux-*6.1.130*_amd64.deb /media/linux/78D48F66D48F260A
+cp -r ../linux-*6.1.130*_amd64.deb /media/linux/OTUS
 ```
 
 ```bash
