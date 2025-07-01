@@ -119,6 +119,7 @@ cp -v /boot/config-$(uname -r) .config
 --disable BPF_EVENTS \
 --disable BPFILTER \
 --disable MODULE_SIG \
+--disable MODULE_SIG_ALL \
 --disable KUNIT \
 --disable KASAN \
 --disable KASAN_GENERIC \
