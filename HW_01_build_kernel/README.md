@@ -63,11 +63,11 @@ rm -f linux-*_6.1.130.orig.tar.gz
 ```
 
 ```bash
-linux-*_6.1.130-3_amd64.deb
+rm -f linux-*_6.1.130-3_amd64.deb
 ```
 
 ```bash
-linux-upstream_6.1.130-*
+rm -f linux-upstream_6.1.130-*
 ```
 
 Создать dpkg-совместимый архив из исходников:
