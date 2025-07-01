@@ -159,7 +159,7 @@ df -h
 ```
 
 ```bash
-cp -r .config /media/linux/78D48F66D48F260A
+cp -r .config /media/linux/OTUS
 ```
 
 ### 10. Собрать .deb пакеты ядра
@@ -191,7 +191,7 @@ df -h
 ```
 
 ```bash
-cp -r ../error.log /media/linux/78D48F66D48F260A
+cp -r ../error.log /media/linux/OTUS
 ```
 
 ### 13. Проверить наличия ядра
