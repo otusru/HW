@@ -47,6 +47,14 @@ lsmod
 cd /usr/src
 ```
 
+```bash
+rm -f linux-*gz
+```
+
+```bash
+rm -rf linux-6.1.130
+```
+
 Скачать архив, если ещё не скачан:
 ```bash
 curl -O https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.130.tar.gz
