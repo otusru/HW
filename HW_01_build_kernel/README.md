@@ -27,6 +27,10 @@ apt install -y \
     dpkg-dev fakeroot rsync kmod cpio python3 curl
 ```
 
+```bash
+apt install openssl
+```
+
 ### 4. Очистить ненужные модули и проверка загруженных модулей (не обязательно)
 
 ```bash
