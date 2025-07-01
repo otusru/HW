@@ -1,0 +1,6 @@
+[1;35m dpkg-source --before-build .
+[0m[1;35m debian/rules binary
+[0m[1;35m dpkg-genbuildinfo --build=binary -O../linux-upstream_6.1.130-1_amd64.buildinfo
+[0m[1;35m dpkg-genchanges --build=binary -O../linux-upstream_6.1.130-1_amd64.changes
+[0m[1;35m dpkg-source --after-build .
+[0m
