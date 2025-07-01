@@ -62,6 +62,14 @@ tar -xvf linux-6.1.130.tar.gz
 rm -f linux-*_6.1.130.orig.tar.gz
 ```
 
+```bash
+linux-*_6.1.130-3_amd64.deb
+```
+
+```bash
+linux-upstream_6.1.130-*
+```
+
 Создать dpkg-совместимый архив из исходников:
 ```bash
 tar --exclude='*.deb' --exclude='*.log' -czf linux-6.1.130_6.1.130.orig.tar.gz linux-6.1.130
