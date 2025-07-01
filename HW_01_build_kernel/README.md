@@ -9,7 +9,12 @@ su
 ### 2. Обновить источники пакетов
 
 ```bash
-echo "deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list
+echo "deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware" >> /etc/apt/sources.list
+```
+или 
+
+```bash
+echo "deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware" | tee -a /etc/apt/sources.list
 ```
 
 ### 3. Установить все необходимые зависимости
@@ -39,6 +44,15 @@ lsmod
 
 ```bash
 cd /usr/src
+```
+
+```bash
+rm ../linux-upstream_6.1.130.orig.tar.gz
+
+```
+
+```bash
+tar czf linux-upstream_6.1.130.orig.tar.gz --transform='s,^linux-6.1.130,linux-upstream-6.1.130,' linux-6.1.130
 ```
 
 ```bash
@@ -91,7 +105,6 @@ cp -v /boot/config-$(uname -r) .config
 
 ### 8. Обновить конфигурацию
 
-
 Минимальное ядро для железа
 
 ```bash
@@ -124,6 +137,12 @@ cp -r .config /media/linux/78D48F66D48F260A
 
 ```bash
 make -j$(nproc) deb-pkg 2> ../error.log
+```
+
+или 
+
+```bash
+fakeroot make -j$(nproc) deb-pkg
 ```
 
 ### 11. Проверить наличие ошибок
@@ -196,4 +215,18 @@ uname -r
 
 ```
 6.1.130
+```
+
+### 18. Убедиться, что ядро и initrd действительно установлены
+
+После перезагрузки:
+
+```bash
+ls /boot | grep 6.1.130
+```
+
+### 19. Проверить, что новое ядро добавлено в загрузчик (GRUB)
+
+```bash
+grep 6.1.130 /boot/grub/grub.cfg
 ```
