@@ -118,11 +118,11 @@ cp -v /boot/config-$(uname -r) .config
 --disable BPF_JIT \
 --disable BPF_EVENTS \
 --disable BPFILTER \
---disable MODULE_SIG \                      # включает подпись загружаемых модулей ядра.
---disable MODULE_SIG_ALL \                  # заставляет подписывать все модули.
---disable MODULE_SIG_KEY \                  # путь к ключу для подписи.
---disable SYSTEM_TRUSTED_KEYRING \          # доверенный ключевой набор.
---disable SYSTEM_REVOCATION_LIST \          # список отозванных сертификатов.
+--disable MODULE_SIG \
+--disable MODULE_SIG_ALL \
+--disable MODULE_SIG_KEY \
+--disable SYSTEM_TRUSTED_KEYRING \
+--disable SYSTEM_REVOCATION_LIST \
 --disable KUNIT \
 --disable KASAN \
 --disable KASAN_GENERIC \
