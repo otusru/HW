@@ -164,6 +164,10 @@ cp -r .config /media/linux/78D48F66D48F260A
 make -j$(nproc) deb-pkg 2> ../error.log
 ```
 
+```bash
+make -j$(nproc) bindeb-pkg 2> ../error.log
+```
+
 или 
 
 ```bash
