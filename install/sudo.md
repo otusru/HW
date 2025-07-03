@@ -8,6 +8,7 @@ https://www.sudo.ws/dist/
 
 https://github.com/sudo-project/sudo/releases/tag/v1.9.17p1
 
+```bash
 sudo apt install build-essential libpam0g-dev libssl-dev
 wget https://www.sudo.ws/dist/sudo-1.9.17p1.tar.gz
 tar -xzf sudo-1.9.17p1.tar.gz
@@ -15,3 +16,4 @@ cd sudo-1.9.17p1
 ./configure
 make
 sudo make install
+```
