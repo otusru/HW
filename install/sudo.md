@@ -17,3 +17,16 @@ cd sudo-1.9.17p1
 make
 sudo make install
 ```
+
+Добавь /usr/local/bin перед /usr/bin:
+
+```bash
+export PATH=/usr/local/bin:$PATH
+```
+
+Проверь:
+
+```bash
+which sudo
+sudo --version
+```
